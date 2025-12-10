@@ -1,173 +1,132 @@
-🚀 Jarvis – Voice Assistant (Google Gemini + Speech Recognition)
+# Jarvis — AI Voice Assistant
 
-Jarvis is a lightweight desktop AI voice assistant that listens for a wake word, understands voice commands, opens apps/websites (Google, YouTube, Maps), gives directions, and answers general questions using Google Gemini.
-Speech recognition is handled via SpeechRecognition + Google STT, while replies are spoken using gTTS + pygame.
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)
+![Google Gemini](https://img.shields.io/badge/Google-Gemini_AI-orange?logo=google)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-✨ Features
+A lightweight desktop **Jarvis** voice assistant that listens for a wake word, runs commands (open websites, show maps/directions), and uses **Google Gemini** for conversational replies. This README assumes your main script is `main.py`.
 
-🎤 Wake-word detection (e.g., "Jarvis", "Hey Jarvis")
+---
 
-🌐 Opens popular websites (Google, YouTube, Instagram, Facebook, etc.)
+## Features
 
-🗺️ Opens places or directions in Google Maps
+- 🎤 Wake-word activation (e.g., **"Jarvis"**, **"Hey Jarvis"**)  
+- 🌐 Open websites (Google, YouTube, Instagram, Facebook, etc.)  
+- 🗺️ Open a place in Google Maps (e.g., *"Jarvis show me Taj Mahal in map"*)  
+- 🚗 Open directions in Google Maps (e.g., *"Jarvis show me direction from Ahmedabad to Mumbai in map"*)  
+- 🔊 Text-to-speech via **gTTS** and playback with **pygame**  
+- 🤖 Fallback / conversational replies using **Google Gemini**  
+- ⚙️ Adjustable microphone & recognition tuning for low-latency responses
 
-Example: "Jarvis show me Taj Mahal in map"
+---
 
-Example: "Jarvis show me direction from Ahmedabad to Mumbai in map"
+## Project layout
 
-🤖 AI responses using Google Gemini 2.x models
+    project/
+    ├─ main.py
+    ├─ googleAI-key.txt # your Google AI Studio API key (DO NOT commit)
+    ├─ command.mp3 # generated TTS file (ignored)
+    ├─ README.md
+    ├─ requirements.txt
+    └─ .gitignore
 
-🔊 Voice output using gTTS (Text-to-Speech)
+---
 
-🧠 Background listening with adjustable noise thresholds
+## Requirements
 
-📂 API key stored securely in a local file (googleAI-key.txt)
+Tested with Python 3.10+. Install required Python packages:
 
-🧩 Extendable command system — easy to add new features
+```bash
+pip install SpeechRecognition gTTS pygame google-genai
 
-📦 Requirements
+Microphone support (Windows)
 
-Install dependencies:
-
-pip install SpeechRecognition gTTS pygame google-genai requests beautifulsoup4
-
-
-You may also need PyAudio (for microphone access):
+If pyaudio is required and fails to install:
 
 pip install pipwin
 pipwin install pyaudio
 
+Setup
 
-If PyAudio installation fails, use pipwin — it installs the correct Windows wheel automatically.
+Create googleAI-key.txt in the project root and paste your Google AI Studio API key (one line).
 
-🔐 API Key Setup
+Add googleAI-key.txt and command.mp3 to .gitignore.
 
-Create a file:
+Install dependencies (see Requirements).
 
-googleAI-key.txt
+Run Jarvis:
 
-
-Paste your Google AI Studio API key inside it (one line only).
-Do NOT commit this file to Git (add it to .gitignore).
-
-▶️ Run the Assistant
 python main.py
 
 
-Jarvis will say:
+Jarvis should announce initialization and begin listening. Use the wake word, then give a command.
 
-“Initializing Jarvis…”
+Example voice commands
 
-Then it begins listening in the background.
+Websites
 
-Say:
+Jarvis open Google
 
-“Jarvis” → pause → give your command.
+Jarvis open YouTube
 
-🗣️ Example Voice Commands
-🌍 Maps & Directions
+Maps & Directions
 
-“Jarvis show me Taj Mahal in map”
+Jarvis show me Taj Mahal in map
 
-“Jarvis open Ahmedabad in map”
+Jarvis show me Ahmedabad in map
 
-“Jarvis show me direction from Surat to Pune in map”
+Jarvis show me direction from Surat to Pune in map
 
-🌐 General Websites
+AI Q&A
 
-“Jarvis open Google”
+Jarvis, what is artificial intelligence?
 
-“Jarvis open YouTube”
+Jarvis, tell me a joke.
 
-“Jarvis open Instagram”
+Tuning (for snappy responses)
 
-💬 AI Answers
-
-“Jarvis, what is artificial intelligence?”
-
-“Jarvis, tell me a joke.”
-
-🧠 How It Works
-🎧 Listening
-
-Uses speech_recognition to capture mic audio
-
-Uses adjustable thresholds for faster response (pause_threshold, non_speaking_duration)
-
-Wake-word detection triggers the command listener
-
-🤖 AI Brain (Gemini)
-
-Gemini responds to general questions using:
-
-client.models.generate_content(model="gemini-2.5-flash", ...)
-
-
-A system_instruction guides the behavior (short answers, etc.)
-
-🔊 Speaking
-
-Converts AI text → speech with gTTS
-
-Plays output via pygame.mixer
-
-🌐 Maps
-
-Parses the command and opens Google Maps URLs:
-
-https://www.google.com/maps/place/<location>
-https://www.google.com/maps/dir/<from>/<to>
-
-🛠️ Recommended Improvements
-
-You can extend Jarvis by adding:
-
-Offline speech recognition (Vosk + webrtcvad)
-
-Wake-word engine (Picovoice Porcupine)
-
-Weather API integration
-
-Music player integration
-
-Email/SMS automation
-
-If you want help adding any of these, ask!
-
-📁 Project Structure (typical)
-project/
-│─ main.py
-│─ googleAI-key.txt      # your key (ignored in git)
-│─ command.mp3           # TTS output (ignored)
-│─ README.md
-│─ requirements.txt
-
-⚠️ Important Notes
-
-Do not commit your API key — keep googleAI-key.txt private.
-
-Gemini models do not verify the web automatically.
-For accurate real-time facts (presidents, stock, news), add a web-scraping verification step.
-
-Microphone sensitivity may require tuning via:
+Edit main.py recognizer settings:
 
 recognizer.energy_threshold = 300
 recognizer.pause_threshold = 0.6
 recognizer.non_speaking_duration = 0.2
+# Use listen(timeout=1, phrase_time_limit=2) to keep latency low
 
-🧑‍💻 Contributing
 
-Pull requests are welcome!
-You may contribute fixes for:
+Increase energy_threshold in noisy environments.
 
-Faster recognition
+Decrease it if the assistant misses quiet speech.
 
-More built-in commands
+Handling time-sensitive queries
 
-Better verification for current-events queries
+Models have static knowledge and may be out-of-date. For questions like “Who is the president” or stock prices, implement a web verification step (e.g., scrape Wikipedia or use a news API) and return the verified fact (optionally pass it to Gemini for formatting).
 
-Additional integrations (Home automation, Spotify, WhatsApp API, etc.)
+.gitignore (suggested)
+googleAI-key.txt
+command.mp3
+__pycache__/
+*.pyc
+.env
 
-📜 License
+Example requirements.txt
+SpeechRecognition
+gTTS
+pygame
+google-genai
+requests
+beautifulsoup4
+pyaudio    # optional; use pipwin on Windows if direct install fails
 
-MIT License
+Contribution
+
+PRs welcome. Ideas:
+
+Add offline STT (Vosk + webrtcvad) for lower latency
+
+Add hotword detection (Porcupine)
+
+Integrate weather, calendar, or home automation
+
+License
+
+MIT License — see LICENSE file.
