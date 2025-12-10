@@ -1,1 +1,1 @@
-# use-openai-with-python
+# use-googleai-with-python
