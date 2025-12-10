@@ -38,14 +38,14 @@ Tested with Python 3.10+. Install required Python packages:
 
 ```bash
 pip install SpeechRecognition gTTS pygame google-genai
-
+```
 Microphone support (Windows)
 
 If pyaudio is required and fails to install:
-
+```bash
 pip install pipwin
 pipwin install pyaudio
-
+```
 Setup
 
 Create googleAI-key.txt in the project root and paste your Google AI Studio API key (one line).
@@ -55,21 +55,23 @@ Add googleAI-key.txt and command.mp3 to .gitignore.
 Install dependencies (see Requirements).
 
 Run Jarvis:
+```bash
 
 python main.py
+```
 
 
 Jarvis should announce initialization and begin listening. Use the wake word, then give a command.
 
-Example voice commands
+## Example voice commands
 
-Websites
+# Websites
 
 Jarvis open Google
 
 Jarvis open YouTube
 
-Maps & Directions
+# Maps & Directions
 
 Jarvis show me Taj Mahal in map
 
@@ -77,21 +79,22 @@ Jarvis show me Ahmedabad in map
 
 Jarvis show me direction from Surat to Pune in map
 
-AI Q&A
+# AI Q&A
 
 Jarvis, what is artificial intelligence?
 
 Jarvis, tell me a joke.
 
-Tuning (for snappy responses)
+# Tuning (for snappy responses)
 
 Edit main.py recognizer settings:
 
+```bash
 recognizer.energy_threshold = 300
 recognizer.pause_threshold = 0.6
 recognizer.non_speaking_duration = 0.2
-# Use listen(timeout=1, phrase_time_limit=2) to keep latency low
 
+# Use listen(timeout=1, phrase_time_limit=2) to keep latency low
 
 Increase energy_threshold in noisy environments.
 
@@ -100,24 +103,9 @@ Decrease it if the assistant misses quiet speech.
 Handling time-sensitive queries
 
 Models have static knowledge and may be out-of-date. For questions like “Who is the president” or stock prices, implement a web verification step (e.g., scrape Wikipedia or use a news API) and return the verified fact (optionally pass it to Gemini for formatting).
+```
 
-.gitignore (suggested)
-googleAI-key.txt
-command.mp3
-__pycache__/
-*.pyc
-.env
-
-Example requirements.txt
-SpeechRecognition
-gTTS
-pygame
-google-genai
-requests
-beautifulsoup4
-pyaudio    # optional; use pipwin on Windows if direct install fails
-
-Contribution
+# Contribution
 
 PRs welcome. Ideas:
 
@@ -127,6 +115,6 @@ Add hotword detection (Porcupine)
 
 Integrate weather, calendar, or home automation
 
-License
+## License
 
 MIT License — see LICENSE file.
