@@ -1,8 +1,9 @@
+googleAI-key.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
-
+googleenv/
 # C extensions
 *.so
 
